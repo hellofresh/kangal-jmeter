@@ -2,7 +2,6 @@ FROM openjdk:8-jre-slim
 LABEL maintainer="team-platform@hellofresh.com"
 
 ARG JMETER_VERSION=5.0
-ARG VERSION
 
 ENV JMETER_HOME /opt/apache-jmeter-$JMETER_VERSION
 ENV PATH $JMETER_HOME/bin:$PATH
@@ -32,8 +31,6 @@ RUN cd /opt \
 
 WORKDIR /opt/apache-jmeter-$JMETER_VERSION
 
-ADD log4j2.xml /opt/apache-jmeter-$JMETER_VERSION
-ADD rmi_keystore.jks /opt/apache-jmeter-$JMETER_VERSION/bin
-ADD rmi_keystore.jks /opt/apache-jmeter-$JMETER_VERSION
-
-RUN echo $VERSION
+COPY log4j2.xml /opt/apache-jmeter-$JMETER_VERSION
+COPY rmi_keystore.jks /opt/apache-jmeter-$JMETER_VERSION/bin
+COPY rmi_keystore.jks /opt/apache-jmeter-$JMETER_VERSION

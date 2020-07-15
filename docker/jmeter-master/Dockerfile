@@ -1,5 +1,4 @@
-ARG VERSION
-FROM platformhellofresh/kangal-jmeter:base
+FROM hellofreshtech/kangal-jmeter:base
 
 ARG JMETER_VERSION=5.0
 
@@ -16,7 +15,7 @@ ENV AWS_BUCKET_NAME ""
 RUN apt-get update && \
     apt-get --quiet --yes install awscli
 
-ADD mysql-connector-java-5.1.47-bin.jar /opt/apache-jmeter-5.0/lib/
-ADD launcher.sh /
+COPY mysql-connector-java-5.1.47-bin.jar /opt/apache-jmeter-5.0/lib/
+COPY launcher.sh /
 
 ENTRYPOINT ["/launcher.sh"]

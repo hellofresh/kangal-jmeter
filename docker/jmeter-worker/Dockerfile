@@ -1,5 +1,4 @@
-ARG VERSION
-FROM platformhellofresh/kangal-jmeter:base
+FROM hellofreshtech/kangal-jmeter:base
 
 ARG JMETER_VERSION=5.0
 

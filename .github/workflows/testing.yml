@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
       - name: Run Shellcheck
         uses: azohra/shell-linter@latest
 
@@ -23,11 +23,5 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-      - name: Test
-        uses: luke142367/Docker-Lint-Action@v1.0.0
-        with:
-          target: Dockerfile
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: |
+          echo "We're going to validate Dockerfiles in this task. Work in progress..."
