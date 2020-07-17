@@ -1,5 +1,10 @@
 # Kangal-JMeter
-Kangal-JMeter is a set of docker images specifically configured for [Kangal](https://github.com/hellofresh/kangal).
+<p align="center">  
+<img src="./kangal_logo.svg" height="100">
+<img src="./hellofresh.svg" height="100">
+</p>
+
+Kangal-JMeter is a set of docker images specifically configured for [Kangal](https://github.com/hellofresh/kangal)
 
 Based on these images Kangal creates JMeter-worker and JMeter-master pods automatically for every new load-test.
 
