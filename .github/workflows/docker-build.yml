@@ -1,0 +1,45 @@
+name: Building Docker images
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  release:
+    types:
+      - created
+
+jobs:
+  build_docker:
+    name: Build docker image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build and push Docker base image
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: hellofreshtech/kangal-jmeter
+          path: docker/jmeter-base/.
+          tags: base
+
+      - name: Build and push Docker master image
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: hellofreshtech/kangal-jmeter-master
+          path: docker/jmeter-master/.
+          tags: latest
+
+      - name: Build and push Docker worker image
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: hellofreshtech/kangal-jmeter-worker
+          path: docker/jmeter-worker/.
+          tags: latest
