@@ -1,4 +1,4 @@
-name: Building Docker images
+name: Building Docker images for PR
 
 on:
   push:
@@ -18,9 +18,6 @@ jobs:
         if: success()
         id: get_version
         run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3-10 | tr '/' '-')
-
-      - name: Echo 1
-        run: echo ${{ steps.get_version.outputs.VERSION }}
 
       - name: Build and push Docker base image
         uses: docker/build-push-action@v1

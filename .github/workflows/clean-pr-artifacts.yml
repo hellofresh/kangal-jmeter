@@ -1,16 +1,23 @@
-name: Delete PR artifacts from DockerHub
+name: Clean RP artifacts
 
-on:
+on: 
   pull_request:
-    - closed
+    types: delete
+    
 
 jobs:
   remove_pr_tag:
-    name: Removing PR artifact by tag
+    name: Removing PR artifact by tag from DockerHub
     runs-on: ubuntu-latest
     steps:
-      - name: Send curl to delete
+      - name: Get the version from ref
+        if: success()
+        id: get_version
+        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3-10 | tr '/' '-')
+
+      - name: Send curl to delete kangal-jmeter
         run: |
+          TAG=${{ steps.get_version.outputs.VERSION }}
           HUB_TOKEN=$(curl -s -H "Content-Type: application/json" \
           -X POST -d '{"username": "${{ secrets.DOCKER_USERNAME }}", "password": "${{ secrets.DOCKER_PASSWORD }}"}'\
           https://hub.docker.com/v2/users/login/ | jq -r .token)
@@ -20,4 +27,4 @@ jobs:
           curl -i -X DELETE \
             -H "Accept: application/json" \
             -H "Authorization: JWT $HUB_TOKEN" \
-            https://hub.docker.com/v2/repositories/<HUB_USERNAME>/<REPO>/tags/<fffooo>/
+            https://hub.docker.com/v2/repositories/${{ secrets.DOCKER_USERNAME }}/kangal-jmeter/tags/$TAG/

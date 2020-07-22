@@ -16,10 +16,7 @@ jobs:
       - name: Get the version from ref
         if: success()
         id: get_version
-        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF)
-
-      - name: Echo 1
-        run: echo ${{ steps.get_version.outputs.VERSION }}
+        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
 
       - name: Build and push Docker base image
         uses: docker/build-push-action@v1
@@ -38,7 +35,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: hellofreshtech/kangal-jmeter-master
           path: docker/jmeter-master/.
-          build_args: ${{ format('version={0}', steps.get_version.outputs.VERSION) }}
+          build_args: ${{ steps.get_version.outputs.VERSION }}
           tag_with_ref: true
           tags: latest
 
@@ -49,6 +46,6 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: hellofreshtech/kangal-jmeter-worker
           path: docker/jmeter-worker/.
-          build_args: ${{ format('version={0}', steps.get_version.outputs.VERSION) }}
+          build_args: ${{ steps.get_version.outputs.VERSION }}
           tag_with_ref: true
           tags: latest
