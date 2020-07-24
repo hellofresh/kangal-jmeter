@@ -1,0 +1,27 @@
+name: Testing
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  release:
+    types:
+      - created
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Run Shellcheck
+        uses: azohra/shell-linter@latest
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "We're going to validate Dockerfiles in this task. Work in progress..."
