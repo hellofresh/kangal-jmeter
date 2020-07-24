@@ -1,5 +1,5 @@
-ARG version="latest"
-FROM hellofreshtech/kangal-jmeter:$version
+ARG VERSION="latest"
+FROM hellofreshtech/kangal-jmeter:$VERSION
 
 ARG JMETER_VERSION=5.0
 

@@ -1,8 +1,6 @@
 name: Building Docker images for PR
 
 on:
-  push:
-    branches: [ master ]
   pull_request:
     branches: [ master ]
 
@@ -14,10 +12,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Get the version from ref
-        if: success()
-        id: get_version
-        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3-10 | tr '/' '-')
+      - name: Extract PR name
+        run: echo "##[set-output name=pr;]$(echo ${{ github.ref }} | cut -d / -f 3 | tr '/' '-')"
+        id: extract_pr
 
       - name: Build and push Docker base image
         uses: docker/build-push-action@v1
@@ -26,7 +23,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: hellofreshtech/kangal-jmeter
           path: docker/jmeter-base/.
-          tag_with_ref: true
+          tags: ${{ format('PR-{0}', steps.extract_pr.outputs.pr) }}
 
       - name: Build and push Docker master image
         uses: docker/build-push-action@v1
@@ -35,8 +32,8 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: hellofreshtech/kangal-jmeter-master
           path: docker/jmeter-master/.
-          build_args: ${{ format('version=pr-{0}', steps.get_version.outputs.VERSION) }}
-          tag_with_ref: true
+          build_args: ${{ format('version=PR-{0}', steps.extract_pr.outputs.pr) }}
+          tags: ${{ format('PR-{0}', steps.extract_pr.outputs.pr) }}
 
       - name: Build and push Docker worker image
         uses: docker/build-push-action@v1
@@ -45,5 +42,5 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: hellofreshtech/kangal-jmeter-worker
           path: docker/jmeter-worker/.
-          build_args: ${{ format('version=pr-{0}', steps.get_version.outputs.VERSION) }}
-          tag_with_ref: true
+          build_args: ${{ format('version=PR-{0}', steps.extract_pr.outputs.pr) }}
+          tags: ${{ format('PR-{0}', steps.extract_pr.outputs.pr) }}
