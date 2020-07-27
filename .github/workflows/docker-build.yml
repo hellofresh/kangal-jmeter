@@ -1,20 +1,25 @@
-name: Building Docker images for PR
+name: Building master Docker images and tag with semver
 
 on:
-  pull_request:
-    branches: [ master ]
+  push:
+    branches:
+      - master
 
 jobs:
   build_docker:
-    name: Build docker image
+    name: Bump semver
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@main
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@1.17.2
+        id: semver
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Extract PR name
-        run: echo "##[set-output name=pr;]$(echo ${{ github.ref }} | cut -d / -f 3 | tr '/' '-')"
-        id: extract_pr
 
       - name: Build and push Docker base image
         uses: docker/build-push-action@v1
@@ -23,7 +28,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: hellofreshtech/kangal-jmeter
           path: docker/jmeter-base/.
-          tags: ${{ format('PR-{0}', steps.extract_pr.outputs.pr) }}
+          tags: ${{ steps.semver.outputs.new_tag }}
 
       - name: Build and push Docker master image
         uses: docker/build-push-action@v1
@@ -32,8 +37,8 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: hellofreshtech/kangal-jmeter-master
           path: docker/jmeter-master/.
-          build_args: ${{ format('version=PR-{0}', steps.extract_pr.outputs.pr) }}
-          tags: ${{ format('PR-{0}', steps.extract_pr.outputs.pr) }}
+          build_args: ${{ format('version={0}', steps.semver.outputs.new_tag) }}
+          tags: ${{ steps.semver.outputs.new_tag }}
 
       - name: Build and push Docker worker image
         uses: docker/build-push-action@v1
@@ -42,5 +47,5 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: hellofreshtech/kangal-jmeter-worker
           path: docker/jmeter-worker/.
-          build_args: ${{ format('version=PR-{0}', steps.extract_pr.outputs.pr) }}
-          tags: ${{ format('PR-{0}', steps.extract_pr.outputs.pr) }}
+          build_args: ${{ format('version={0}', steps.semver.outputs.new_tag) }}
+          tags: ${{ steps.semver.outputs.new_tag }}
