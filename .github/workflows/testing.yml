@@ -23,5 +23,32 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     steps:
-      - run: |
-          echo "We're going to validate Dockerfiles in this task. Work in progress..."
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build Docker base image
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: hellofreshtech/kangal-jmeter
+          path: docker/jmeter-base/.
+          push: false
+
+      - name: Build Docker master image
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: hellofreshtech/kangal-jmeter
+          path: docker/jmeter-master/.
+          push: false
+
+      - name: Build Docker worker image
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: hellofreshtech/kangal-jmeter
+          path: docker/jmeter-worker/.
+          push: false
