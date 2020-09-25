@@ -15,7 +15,7 @@ run_jmeter_test() {
       echo "=== Jmeter is finished! ==="
       if [[ -n "${REPORT_PRESIGNED_URL}" ]]; then
         echo "=== Saving report to Object storage ==="
-        $(cd /results && tar -cf ${OLDPWD}/results.tar *)
+        tar -C /results -cf results.tar .
         curl -X PUT -H "Content-Type: application/x-tar" -T results.tar -L "${REPORT_PRESIGNED_URL}"
       fi
       exit 0
