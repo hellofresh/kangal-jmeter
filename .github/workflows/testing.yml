@@ -45,6 +45,7 @@ jobs:
         with:
           tags: hellofreshtech/kangal-jmeter
           context: docker/jmeter-master
+          file: docker/jmeter-master/Dockerfile
           push: false
 
       - name: Build Docker worker image
@@ -52,4 +53,5 @@ jobs:
         with:
           tags: hellofreshtech/kangal-jmeter
           context: docker/jmeter-worker
+          file: docker/jmeter-worker/Dockerfile
           push: false
