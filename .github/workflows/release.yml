@@ -33,7 +33,7 @@ jobs:
           push: true
 
       - name: Build and push Docker master image
-        uses: docker/build-push-action@v1
+        uses: docker/build-push-action@v2
         with:
           tags: hellofreshtech/kangal-jmeter-master:latest
           context: docker/jmeter-master
