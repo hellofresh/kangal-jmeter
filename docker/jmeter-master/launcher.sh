@@ -17,6 +17,11 @@ run_jmeter_test() {
         echo "=== Saving report to Object storage ==="
         tar -C /results -cf results.tar .
         curl -X PUT -H "Content-Type: application/x-tar" -T results.tar -L "${REPORT_PRESIGNED_URL}"
+      elif [[ -n "${AWS_BUCKET_NAME}" ]]; then
+        echo "WARNING: Using AWS credentials to upload reports is deprecated. Kangal upgrade is recommended."
+        echo "=== Trying to send report to ${AWS_BUCKET_NAME}/${LOADTEST_NAME} endpoint ${AWS_ENDPOINT_URL} ==="
+        cp /results/index.html /results/main.html
+        aws s3 cp --recursive /results s3://"${AWS_BUCKET_NAME}"/"${LOADTEST_NAME}"/ --endpoint-url https://"${AWS_ENDPOINT_URL}"
       fi
       exit 0
     fi
