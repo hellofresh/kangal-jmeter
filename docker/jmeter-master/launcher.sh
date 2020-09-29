@@ -13,13 +13,17 @@ run_jmeter_test() {
     cat output.log
     if grep "end of run" ./output.log; then
       echo "=== Jmeter is finished! ==="
-      echo "=== Trying to send report to ${AWS_BUCKET_NAME}/${LOADTEST_NAME} endpoint ${AWS_ENDPOINT_URL} ==="
-      if [[ -n "${AWS_BUCKET_NAME}" ]]; then
+      if [[ -n "${REPORT_PRESIGNED_URL}" ]]; then
         echo "=== Saving report to Object storage ==="
+        tar -C /results -cf results.tar .
+        curl -X PUT -H "Content-Type: application/x-tar" -T results.tar -L "${REPORT_PRESIGNED_URL}"
+      elif [[ -n "${AWS_BUCKET_NAME}" ]]; then
+        echo "WARNING: Using AWS credentials to upload reports is deprecated. Kangal upgrade is recommended."
+        echo "=== Trying to send report to ${AWS_BUCKET_NAME}/${LOADTEST_NAME} endpoint ${AWS_ENDPOINT_URL} ==="
         cp /results/index.html /results/main.html
         aws s3 cp --recursive /results s3://"${AWS_BUCKET_NAME}"/"${LOADTEST_NAME}"/ --endpoint-url https://"${AWS_ENDPOINT_URL}"
       fi
-       exit 0
+      exit 0
     fi
     if JMETER_ERROR=$(grep "ERROR" ./output.log); then
       echo "=== We got an error while running JMeter, exiting 1 ==="

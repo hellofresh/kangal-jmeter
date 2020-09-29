@@ -30,11 +30,7 @@ Logging configuration in log4j2.xml is added to base image to support logging.
 ## Starting JMeter with launcher script
 Launcher.sh script runs in JMeter-master container, and it starts JMeter application in a container as soon as `test.jmx` file is added to the container.
 
-### Saving JMeter report to AWS S3 bucket
+### Saving JMeter report to storage
 JMeter automatically creates a test report after the successful test run.
-Launcher.sh uploads the report to S3 bucket. 
-JMeter-master docker image contains environment variables for connecting to AWS.
-- AWS_DEFAULT_REGION
-- ENV AWS_ENDPOINT_URL
-- ENV AWS_BUCKET_NAME
-Kangal initialises these variables when creating JMeter-master pods for every new test. 
+For every new test Kangal exports a environment variable called `REPORT_PRESIGNED_URL`, which allows uploading a single file to it by simple doing `PUT` request.
+JMeter-master docker image uses the script `launcher.sh` to upload the report by using this PreSigned URL.
