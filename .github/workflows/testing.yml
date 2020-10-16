@@ -44,6 +44,7 @@ jobs:
           mv "/tmp/kangal-${VERSION}"/* .
           make apply-crd
           sed -i "s/latest/local/" pkg/backends/jmeter/jmeter.go
+          sed -i "s/Always/IfNotPresent/" pkg/backends/jmeter/resources.go
           make build
 
       - name: Build Docker base image
