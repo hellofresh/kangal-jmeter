@@ -13,6 +13,7 @@ run_jmeter_test() {
     cat output.log
     if grep "end of run" ./output.log; then
       echo "=== Jmeter is finished! ==="
+      cp results.csv /results/results.csv
       if [[ -n "${REPORT_PRESIGNED_URL}" ]]; then
         echo "=== Saving report to Object storage ==="
         tar -C /results -cf results.tar .
@@ -28,6 +29,7 @@ run_jmeter_test() {
     if JMETER_ERROR=$(grep "ERROR" ./output.log); then
       echo "=== We got an error while running JMeter, exiting 1 ==="
       echo "$JMETER_ERROR"
+      cp ./output.log /results/output.log
       exit 1
     fi
     sleep 10
