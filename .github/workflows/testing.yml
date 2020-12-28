@@ -33,6 +33,8 @@ jobs:
 
       - name: Setup Kube in Docker
         uses: engineerd/setup-kind@v0.4.0
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
       - name: Setup latest Kangal release
         run: |
@@ -43,14 +45,14 @@ jobs:
           tar -xzf "/tmp/kangal-source.tar.gz" -C /tmp
           mv "/tmp/kangal-${VERSION}"/* .
           make apply-crd
-          sed -i "s/latest/local/" pkg/backends/jmeter/jmeter.go
+          sed -i "s/latest/local/" pkg/backends/jmeter/backend.go
           sed -i "s/Always/IfNotPresent/" pkg/backends/jmeter/resources.go
           make build
 
       - name: Build Docker base image
         uses: docker/build-push-action@v1.1.0
         with:
-          repository: hellofreshtech/kangal-jmeter
+          repository: hellofresh/kangal-jmeter
           tags: local
           path: docker/jmeter-base
           push: false
@@ -58,7 +60,7 @@ jobs:
       - name: Build Docker master image
         uses: docker/build-push-action@v1.1.0
         with:
-          repository: hellofreshtech/kangal-jmeter-master
+          repository: hellofresh/kangal-jmeter-master
           tags: local
           path: docker/jmeter-master
           push: false
@@ -67,7 +69,7 @@ jobs:
       - name: Build Docker worker image
         uses: docker/build-push-action@v1.1.0
         with:
-          repository: hellofreshtech/kangal-jmeter-worker
+          repository: hellofresh/kangal-jmeter-worker
           tags: local
           path: docker/jmeter-worker
           push: false
@@ -76,8 +78,8 @@ jobs:
       - name: Load docker images into kind cluster
         run: |
           docker images
-          kind load docker-image hellofreshtech/kangal-jmeter-master:local
-          kind load docker-image hellofreshtech/kangal-jmeter-worker:local
+          kind load docker-image hellofresh/kangal-jmeter-master:local
+          kind load docker-image hellofresh/kangal-jmeter-worker:local
 
       - name: Run Integration Test
         env:
