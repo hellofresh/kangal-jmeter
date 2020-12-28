@@ -85,6 +85,10 @@ jobs:
         env:
           AWS_ENDPOINT_URL: "localhost:8081"
           AWS_BUCKET_NAME: "kangal-test"
+          JMETER_MASTER_IMAGE_NAME: "hellofresh/kangal-jmeter-master"
+          JMETER_MASTER_IMAGE_TAG: "local"
+          JMETER_WORKER_IMAGE_NAME: "hellofresh/kangal-jmeter-worker"
+          JMETER_WORKER_IMAGE_TAG: "local"
         run: |
           cd kangal
           ./ci/integration-tests.sh
