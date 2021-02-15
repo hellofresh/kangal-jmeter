@@ -43,7 +43,7 @@ jobs:
           tar -xzf "/tmp/kangal-source.tar.gz" -C /tmp
           mv "/tmp/kangal-${VERSION}"/* .
           make apply-crd
-          sed -i "s/latest/local/" pkg/backends/jmeter/jmeter.go
+          sed -i "s/latest/local/" pkg/backends/jmeter/backend.go
           sed -i "s/Always/IfNotPresent/" pkg/backends/jmeter/resources.go
           make build
 
