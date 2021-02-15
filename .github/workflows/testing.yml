@@ -43,7 +43,6 @@ jobs:
           tar -xzf "/tmp/kangal-source.tar.gz" -C /tmp
           mv "/tmp/kangal-${VERSION}"/* .
           make apply-crd
-          sed -i "s/latest/local/" pkg/backends/jmeter/backend.go
           sed -i "s/Always/IfNotPresent/" pkg/backends/jmeter/resources.go
           make build
 
@@ -83,6 +82,10 @@ jobs:
         env:
           AWS_ENDPOINT_URL: "localhost:8081"
           AWS_BUCKET_NAME: "kangal-test"
+          JMETER_WORKER_IMAGE_NAME: "hellofresh/kangal-jmeter-worker"
+          JMETER_MASTER_IMAGE_NAME: "hellofresh/kangal-jmeter-master"
+          JMETER_WORKER_IMAGE_TAG: "local"
+          JMETER_MASTER_IMAGE_TAG: "local"
         run: |
           cd kangal
           ./ci/integration-tests.sh
