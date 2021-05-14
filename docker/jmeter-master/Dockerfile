@@ -1,7 +1,7 @@
 ARG VERSION="latest"
 FROM hellofresh/kangal-jmeter:$VERSION
 
-ARG JMETER_VERSION=5.0
+ARG JMETER_VERSION=5.4.1
 
 ENV SSL_DISABLED false
 ENV WORKER_SVC_NAME jmeter-worker
