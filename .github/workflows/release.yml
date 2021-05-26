@@ -10,7 +10,7 @@ jobs:
     name: Build docker image release
     runs-on: ubuntu-latest
     env:
-      JMETER_VERSION: 5.0
+      JMETER_VERSION: "5.0"
     steps:
       - name: Checkout code
         uses: actions/checkout@v2

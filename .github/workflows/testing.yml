@@ -23,7 +23,7 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     env:
-      JMETER_VERSION: 5.0
+      JMETER_VERSION: "5.0"
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -54,7 +54,7 @@ jobs:
           build_args: |
             JMETER_VERSION=${{env.JMETER_VERSION}}
           repository: hellofresh/kangal-jmeter
-          tags: hellofresh/kangal-jmeter-worker:${{env.JMETER_VERSION}}
+          tags: ${{env.JMETER_VERSION}}
           path: docker/jmeter-base
           push: false
 
