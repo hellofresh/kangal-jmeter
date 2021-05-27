@@ -34,7 +34,9 @@ jobs:
         with:
           build-args: |
             VERSION=${{env.JMETER_VERSION}}
-          tags: hellofresh/kangal-jmeter:${{env.JMETER_VERSION}}
+          tags: |
+            hellofresh/kangal-jmeter:${{env.JMETER_VERSION}}
+            hellofresh/kangal-jmeter:latest
           context: docker/jmeter-base
           file: docker/jmeter-base/Dockerfile
           push: true
@@ -44,7 +46,9 @@ jobs:
         with:
           build-args: |
             VERSION=${{env.JMETER_VERSION}}
-          tags: hellofresh/kangal-jmeter-master:${{env.JMETER_VERSION}}
+          tags: |
+            hellofresh/kangal-jmeter-master:${{env.JMETER_VERSION}}
+            hellofresh/kangal-jmeter-master:latest
           context: docker/jmeter-master
           file: docker/jmeter-master/Dockerfile
           push: true
@@ -54,7 +58,9 @@ jobs:
         with:
           build-args: |
             VERSION=${{env.JMETER_VERSION}}
-          tags: hellofresh/kangal-jmeter-worker:${{env.JMETER_VERSION}}
+          tags: |
+            hellofresh/kangal-jmeter-worker:${{env.JMETER_VERSION}}
+            hellofresh/kangal-jmeter-worker:latest
           context: docker/jmeter-worker
           file: docker/jmeter-worker/Dockerfile
           push: true
