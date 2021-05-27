@@ -13,6 +13,7 @@ RUN apt-get update && \
     apt-get --quiet --yes install awscli
 
 COPY mysql-connector-java-5.1.47-bin.jar /opt/apache-jmeter-5.0/lib/
+COPY jmeter.properties /opt/apache-jmeter-$JMETER_VERSION/bin/
 COPY launcher.sh /
 
 ENTRYPOINT ["/launcher.sh"]
