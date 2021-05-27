@@ -1,7 +1,7 @@
 FROM openjdk:11-jre-slim
 LABEL maintainer="team-platform@hellofresh.com"
 
-ARG JMETER_VERSION=5.4.1
+ARG JMETER_VERSION
 
 ENV JMETER_HOME /opt/apache-jmeter-$JMETER_VERSION
 ENV PATH $JMETER_HOME/bin:$PATH
