@@ -1,6 +1,8 @@
 ARG JMETER_VERSION
 FROM hellofresh/kangal-jmeter:$JMETER_VERSION
 
+ARG JMETER_VERSION
+
 ENV SSL_DISABLED false
 ENV WORKER_SVC_NAME jmeter-worker
 ENV TESTS_DIR /tests
