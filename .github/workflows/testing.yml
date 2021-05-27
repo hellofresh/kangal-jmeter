@@ -22,6 +22,8 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
+    env:
+      JMETER_VERSION: "5.0"
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -47,30 +49,34 @@ jobs:
           make build
 
       - name: Build Docker base image
-        uses: docker/build-push-action@v1.1.0
+        uses: docker/build-push-action@v2
         with:
-          repository: hellofresh/kangal-jmeter
-          tags: local
-          path: docker/jmeter-base
+          build-args: |
+            VERSION=${{env.JMETER_VERSION}}
+          tags: hellofresh/kangal-jmeter:${{env.JMETER_VERSION}}
+          context: docker/jmeter-base
+          file: docker/jmeter-base/Dockerfile
           push: false
 
       - name: Build Docker master image
-        uses: docker/build-push-action@v1.1.0
+        uses: docker/build-push-action@v2
         with:
-          repository: hellofresh/kangal-jmeter-master
-          tags: local
-          path: docker/jmeter-master
+          tags: hellofresh/kangal-jmeter-master:local
+          context: docker/jmeter-master
+          file: docker/jmeter-master/Dockerfile
           push: false
-          build_args: VERSION=local
+          build-args: |
+            VERSION=${{env.JMETER_VERSION}}
 
       - name: Build Docker worker image
-        uses: docker/build-push-action@v1.1.0
+        uses: docker/build-push-action@v2
         with:
-          repository: hellofresh/kangal-jmeter-worker
-          tags: local
-          path: docker/jmeter-worker
+          tags: hellofresh/kangal-jmeter-worker:local
+          context: docker/jmeter-worker
+          file: docker/jmeter-worker/Dockerfile
           push: false
-          build_args: VERSION=local
+          build-args: |
+            VERSION=${{env.JMETER_VERSION}}
 
       - name: Load docker images into kind cluster
         run: |
