@@ -10,7 +10,7 @@ jobs:
     name: Build docker image release
     runs-on: ubuntu-latest
     env:
-      JMETER_VERSION: "5.0"
+      JMETER_VERSION: "5.4.1"
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -33,7 +33,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           build-args: |
-            VERSION=${{env.JMETER_VERSION}}
+            JMETER_VERSION=${{env.JMETER_VERSION}}
           tags: |
             hellofresh/kangal-jmeter:${{env.JMETER_VERSION}}
             hellofresh/kangal-jmeter:latest
@@ -45,7 +45,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           build-args: |
-            VERSION=${{env.JMETER_VERSION}}
+            JMETER_VERSION=${{env.JMETER_VERSION}}
           tags: |
             hellofresh/kangal-jmeter-master:${{env.JMETER_VERSION}}
             hellofresh/kangal-jmeter-master:latest
@@ -57,7 +57,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           build-args: |
-            VERSION=${{env.JMETER_VERSION}}
+            JMETER_VERSION=${{env.JMETER_VERSION}}
           tags: |
             hellofresh/kangal-jmeter-worker:${{env.JMETER_VERSION}}
             hellofresh/kangal-jmeter-worker:latest
