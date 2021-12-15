@@ -50,14 +50,28 @@ jobs:
         with:
           version: "v0.11.1"
 
-      - name: Setup latest Kangal release
+      # TODO: revert to the latest release once fixed version is released as it fails in 1.2.0
+#      - name: Setup latest Kangal release
+#        run: |
+#          mkdir kangal && cd kangal
+#          VERSION=$(curl -fsSL "https://api.github.com/repos/hellofresh/kangal/releases" | jq --raw-output 'map(select(.tag_name|startswith("kangal")|not))[0] | .tag_name')
+#          KANGAL_SOURCE_URL="https://github.com/hellofresh/kangal/archive/${VERSION}.tar.gz"
+#          curl -X GET -H "Accept:application/octet-stream" -fsSL "$KANGAL_SOURCE_URL" > "/tmp/kangal-source.tar.gz"
+#          tar -xzf "/tmp/kangal-source.tar.gz" -C /tmp
+#          mv "/tmp/kangal-${VERSION}"/* .
+#          make apply-crd
+#          sed -i "s/Always/IfNotPresent/" pkg/backends/jmeter/resources.go
+#          make build
+
+      - name: Checkout Kangal code
+        uses: actions/checkout@v2
+        with:
+          repository: hellofresh/kangal
+          path: kangal
+
+      - name: Setup Kangal
         run: |
-          mkdir kangal && cd kangal
-          VERSION=$(curl -fsSL "https://api.github.com/repos/hellofresh/kangal/releases" | jq --raw-output 'map(select(.tag_name|startswith("kangal")|not))[0] | .tag_name')
-          KANGAL_SOURCE_URL="https://github.com/hellofresh/kangal/archive/${VERSION}.tar.gz"
-          curl -X GET -H "Accept:application/octet-stream" -fsSL "$KANGAL_SOURCE_URL" > "/tmp/kangal-source.tar.gz"
-          tar -xzf "/tmp/kangal-source.tar.gz" -C /tmp
-          mv "/tmp/kangal-${VERSION}"/* .
+          cd kangal
           make apply-crd
           sed -i "s/Always/IfNotPresent/" pkg/backends/jmeter/resources.go
           make build
