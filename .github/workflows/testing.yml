@@ -17,7 +17,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
       - name: Run Shellcheck
-        uses: azohra/shell-linter@latest
+        uses: azohra/shell-linter@v0.6.0
 
   test:
     name: Test
