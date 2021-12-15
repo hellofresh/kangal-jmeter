@@ -16,8 +16,16 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
-      - name: Run Shellcheck
-        uses: azohra/shell-linter@v0.6.0
+
+      - name: Run General Linting
+        uses: docker://ghcr.io/github/super-linter:slim-v4
+        env:
+          VALIDATE_ALL_CODEBASE: false
+          VALIDATE_GO: false
+          VALIDATE_JSCPD: false
+          VALIDATE_GITHUB_ACTIONS: false
+          VALIDATE_NATURAL_LANGUAGE: false
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   test:
     name: Test
