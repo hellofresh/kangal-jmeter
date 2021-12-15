@@ -3,22 +3,27 @@ LABEL maintainer="team-platform@hellofresh.com"
 
 ARG JMETER_VERSION
 
+# precaution against CVE-2021-44228 and CVE-2021-45046
+# https://www.ubik-ingenierie.com/blog/jmeter-log4j-vulnerability/
+# TODO remove once we upgraded to jmeter 5.5 or 6.0
+ENV _JAVA_OPTIONS='-Dlog4j2.formatMsgNoLookups=true' JAVA_TOOLS_OPTIONS='-Dlog4j2.formatMsgNoLookups=true'
+
 ENV JMETER_HOME /opt/apache-jmeter-$JMETER_VERSION
 ENV PATH $JMETER_HOME/bin:$PATH
 ENV HEAP -Xms2g -Xmx2g -XX:MaxMetaspaceSize=256m
 
 RUN apt-get clean \
  && apt-get update \
- && apt-get --quiet --yes install \
-    curl \
-    vim \
-    procps
-RUN cd /opt \
- && curl https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-$JMETER_VERSION.tgz -L \
-    --output apache-jmeter-$JMETER_VERSION.tgz \
-    --silent \
- && tar -xzf apache-jmeter-$JMETER_VERSION.tgz \
- && rm apache-jmeter-$JMETER_VERSION.tgz \
+ && apt-get install --quiet --yes --no-install-recommends \
+    curl=7.74.0-1.3+b1 \
+    vim=2:8.2.2434-3 \
+    procps=2:3.3.17-5 \
+ && rm -rf /var/lib/apt/lists/*
+
+RUN curl -o /opt/apache-jmeter-$JMETER_VERSION.tgz \
+    https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-$JMETER_VERSION.tgz -L \
+ && tar -xzf /opt/apache-jmeter-$JMETER_VERSION.tgz --directory /opt \
+ && rm /opt/apache-jmeter-$JMETER_VERSION.tgz \
  && curl -o /opt/apache-jmeter-$JMETER_VERSION/lib/ext/plugins-manager.jar -L \
     https://jmeter-plugins.org/get/ \
  && curl -o /opt/apache-jmeter-$JMETER_VERSION/lib/cmdrunner-2.2.jar -L \
