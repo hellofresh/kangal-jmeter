@@ -1,5 +1,7 @@
 name: Building Release Docker images
 
+concurrency: release
+
 on:
   release:
     types:
