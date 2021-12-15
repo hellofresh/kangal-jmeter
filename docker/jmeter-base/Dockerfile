@@ -3,6 +3,11 @@ LABEL maintainer="team-platform@hellofresh.com"
 
 ARG JMETER_VERSION
 
+# precaution against CVE-2021-44228 and CVE-2021-45046
+# https://www.ubik-ingenierie.com/blog/jmeter-log4j-vulnerability/
+# TODO remove once we upgraded to jmeter 5.5 or 6.0
+ENV _JAVA_OPTIONS='-Dlog4j2.formatMsgNoLookups=true' JAVA_TOOLS_OPTIONS='-Dlog4j2.formatMsgNoLookups=true'
+
 ENV JMETER_HOME /opt/apache-jmeter-$JMETER_VERSION
 ENV PATH $JMETER_HOME/bin:$PATH
 ENV HEAP -Xms2g -Xmx2g -XX:MaxMetaspaceSize=256m
