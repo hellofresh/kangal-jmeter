@@ -14,16 +14,16 @@ ENV HEAP -Xms2g -Xmx2g -XX:MaxMetaspaceSize=256m
 
 RUN apt-get clean \
  && apt-get update \
- && apt-get --quiet --yes install \
-    curl \
-    vim \
-    procps
-RUN cd /opt \
- && curl https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-$JMETER_VERSION.tgz -L \
-    --output apache-jmeter-$JMETER_VERSION.tgz \
-    --silent \
- && tar -xzf apache-jmeter-$JMETER_VERSION.tgz \
- && rm apache-jmeter-$JMETER_VERSION.tgz \
+ && apt-get install --quiet --yes --no-install-recommends \
+    curl=7.74.0-1.3+b1 \
+    vim=2:8.2.2434-3 \
+    procps=2:3.3.17-5 \
+ && rm -rf /var/lib/apt/lists/*
+
+RUN curl -o /opt/apache-jmeter-$JMETER_VERSION.tgz \
+    https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-$JMETER_VERSION.tgz -L \
+ && tar -xzf /opt/apache-jmeter-$JMETER_VERSION.tgz --directory /opt \
+ && rm /opt/apache-jmeter-$JMETER_VERSION.tgz \
  && curl -o /opt/apache-jmeter-$JMETER_VERSION/lib/ext/plugins-manager.jar -L \
     https://jmeter-plugins.org/get/ \
  && curl -o /opt/apache-jmeter-$JMETER_VERSION/lib/cmdrunner-2.2.jar -L \
