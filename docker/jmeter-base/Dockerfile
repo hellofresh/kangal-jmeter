@@ -15,9 +15,7 @@ ENV HEAP -Xms2g -Xmx2g -XX:MaxMetaspaceSize=256m
 RUN apt-get clean \
  && apt-get update \
  && apt-get install --quiet --yes --no-install-recommends \
-    curl=7.74.0-1.3+b1 \
-    vim=2:8.2.2434-3 \
-    procps=2:3.3.17-5 \
+    curl vim procps \
  && rm -rf /var/lib/apt/lists/*
 
 RUN curl -o /opt/apache-jmeter-$JMETER_VERSION.tgz \
