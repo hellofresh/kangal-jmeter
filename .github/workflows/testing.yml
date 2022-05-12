@@ -18,6 +18,17 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
+      - name: Import Secrets
+        id: vault-secrets
+        uses: hashicorp/vault-action@v2.3.0
+        with:
+          url: https://vault.hellofresh.io/
+          method: kubernetes
+          path: tools-k8s
+          role: github-actions-runners-read-default
+          secrets: |
+            gh-actions/global/defaults GITHUB_TOKEN | GITHUB_TOKEN
+
       - name: Check out code
         uses: actions/checkout@v2
 
