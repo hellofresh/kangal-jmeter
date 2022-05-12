@@ -6,7 +6,7 @@ concurrency:
 
 on:
   push:
-    branches: [ patch/EES-7412-replacing-super-linter-with-jetstream-super-linter-action ]
+    branches: [ master ]
   pull_request:
     branches: [ master ]
   release:
