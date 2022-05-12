@@ -1,5 +1,5 @@
 #!/bin/bash
-echo 1
+
 run_jmeter_test() {
   FILE=$1
   [[ "$USE_WORKERS" == "true" ]] && WORKER_OPTS="-R $(getent ahostsv4 "$WORKER_SVC_NAME" | cut -d ' ' -f 1 | sort -u | paste --serial --delimiters ',')"
