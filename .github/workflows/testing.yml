@@ -16,7 +16,7 @@ on:
 jobs:
   lint:
     name: Lint
-    runs-on: ubuntu-latest
+    runs-on: [ self-hosted, default ]
     steps:
       - name: Import Secrets
         id: vault-secrets
