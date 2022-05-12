@@ -21,9 +21,14 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
 
+      - name: Prepare default linting configs
+        id: linter-configs
+        uses: hellofresh/jetstream-ci-scripts/actions/linter-configs
+
       - name: Run General Linting
-        uses: docker://ghcr.io/github/super-linter:slim-v4
+        uses: docker://489198589229.dkr.ecr.eu-west-1.amazonaws.com/super-linter:v4
         env:
+          LINTER_RULES_PATH: ${{ steps.linter-configs.outputs.path }}
           VALIDATE_ALL_CODEBASE: false
           VALIDATE_GO: false
           VALIDATE_JSCPD: false
