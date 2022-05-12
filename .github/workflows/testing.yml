@@ -5,9 +5,13 @@ concurrency:
   cancel-in-progress: true
 
 on:
+  push:
+    branches: [ patch/EES-7412-replacing-super-linter-with-jetstream-super-linter-action ]
   pull_request:
-    branches:
-      - master
+    branches: [ master ]
+  release:
+    types:
+      - created
 
 jobs:
   lint:
