@@ -24,8 +24,8 @@ RUN curl -o /opt/apache-jmeter-$JMETER_VERSION.tgz \
  && rm /opt/apache-jmeter-$JMETER_VERSION.tgz \
  && curl -o /opt/apache-jmeter-$JMETER_VERSION/lib/ext/plugins-manager.jar -L \
     https://jmeter-plugins.org/get/ \
- && curl -o /opt/apache-jmeter-$JMETER_VERSION/lib/cmdrunner-2.2.jar -L \
-    http://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.2/cmdrunner-2.2.jar \
+ && curl -o /opt/apache-jmeter-$JMETER_VERSION/lib/cmdrunner-2.3.jar -L \
+    https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.3/cmdrunner-2.3.jar \
  && curl -o /opt/apache-jmeter-$JMETER_VERSION/lib/postgresql-42.2.5.jar -L \
     https://jdbc.postgresql.org/download/postgresql-42.2.5.jar \
  && java -cp /opt/apache-jmeter-$JMETER_VERSION/lib/ext/plugins-manager.jar \
