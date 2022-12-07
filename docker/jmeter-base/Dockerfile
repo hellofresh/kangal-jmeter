@@ -20,8 +20,8 @@ RUN curl -o /opt/apache-jmeter-$JMETER_VERSION.tgz \
     https://jmeter-plugins.org/get/ \
  && curl -o /opt/apache-jmeter-$JMETER_VERSION/lib/cmdrunner-2.3.jar -L \
     https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.3/cmdrunner-2.3.jar \
- && curl -o /opt/apache-jmeter-$JMETER_VERSION/lib/postgresql-42.2.5.jar -L \
-    https://jdbc.postgresql.org/download/postgresql-42.2.5.jar \
+ && curl -o /opt/apache-jmeter-$JMETER_VERSION/lib/postgresql-42.5.1.jar -L \
+    https://jdbc.postgresql.org/download/postgresql-42.5.1.jar \
  && java -cp /opt/apache-jmeter-$JMETER_VERSION/lib/ext/plugins-manager.jar \
     org.jmeterplugins.repository.PluginManagerCMDInstaller \
  && PluginsManagerCMD.sh install jpgc-fifo,jpgc-functions,jpgc-tst=2.5,jpgc-casutg=2.6
