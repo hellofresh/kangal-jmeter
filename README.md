@@ -17,7 +17,7 @@ Kangal-JMeter base docker image is build together with JMeter plugin-manager and
 - jpgc-tst=2.5 - [Throughput Shaping Timer](https://jmeter-plugins.org/wiki/ThroughputShapingTimer/)
 - jpgc-casutg=2.6 - [Concurrency Thread Group](https://jmeter-plugins.org/wiki/ConcurrencyThreadGroup/#Concurrency-Thread-Group)
 - cmdrunner-2.2 - JMeter specific [Command Line Tool](https://jmeter-plugins.org/wiki/JMeterPluginsCMD/#JMeterPluginsCMD-Command-Line-Tool)
-- postgresql-42.2.5 [JDBC driver for working with PostgreSQL](https://jdbc.postgresql.org/download.html) used to send requests directly from JMeter to DB
+- postgresql-42.5.1 [JDBC driver for working with PostgreSQL](https://jdbc.postgresql.org/download.html) used to send requests directly from JMeter to DB
 
 JMeter-worker and JMeter-master are built from a base image with a few environment variable additions.
 
