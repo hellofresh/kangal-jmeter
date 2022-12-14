@@ -22,6 +22,9 @@ RUN curl -o /opt/apache-jmeter-$JMETER_VERSION.tgz \
     https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.3/cmdrunner-2.3.jar \
  && curl -o /opt/apache-jmeter-$JMETER_VERSION/lib/postgresql-42.5.1.jar -L \
     https://jdbc.postgresql.org/download/postgresql-42.5.1.jar \
+ && rm /opt/apache-jmeter-$JMETER_VERSION/lib/mongo-java-driver-*.jar \
+ && curl -o /opt/apache-jmeter-$JMETER_VERSION/lib/mongo-java-driver-3.12.11.jar -L \
+    https://search.maven.org/remotecontent?filepath=org/mongodb/mongo-java-driver/3.12.11/mongo-java-driver-3.12.11.jar \
  && java -cp /opt/apache-jmeter-$JMETER_VERSION/lib/ext/plugins-manager.jar \
     org.jmeterplugins.repository.PluginManagerCMDInstaller \
  && PluginsManagerCMD.sh install jpgc-fifo,jpgc-functions,jpgc-tst=2.5,jpgc-casutg=2.6
