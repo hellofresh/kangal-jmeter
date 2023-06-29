@@ -27,7 +27,7 @@ RUN curl -o /opt/apache-jmeter-$JMETER_VERSION.tgz \
     https://search.maven.org/remotecontent?filepath=org/mongodb/mongo-java-driver/3.12.11/mongo-java-driver-3.12.11.jar \
  && java -cp /opt/apache-jmeter-$JMETER_VERSION/lib/ext/plugins-manager.jar \
     org.jmeterplugins.repository.PluginManagerCMDInstaller \
- && PluginsManagerCMD.sh install jpgc-fifo,jpgc-functions,jpgc-tst=2.5,jpgc-casutg=2.6
+ && PluginsManagerCMD.sh install jpgc-fifo,jpgc-functions,jpgc-autostop,jpgc-tst=2.5,jpgc-casutg=2.6
 
 WORKDIR /opt/apache-jmeter-$JMETER_VERSION
 
