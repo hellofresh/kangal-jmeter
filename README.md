@@ -14,6 +14,7 @@ Based on these images Kangal creates JMeter-worker and JMeter-master pods automa
 Kangal-JMeter base docker image is build together with JMeter plugin-manager and the following plugins:
 - jpgc-fifo - used for [Inter-Thread Communication](https://jmeter-plugins.org/wiki/InterThreadCommunication/)
 - jpgc-functions - used for [Custom JMeter Functions](https://jmeter-plugins.org/wiki/Functions/)
+- jpgc-functions - used to [AutoStop JMeter](https://jmeter-plugins.org/wiki/AutoStop/) on certain conditions.
 - jpgc-tst=2.5 - [Throughput Shaping Timer](https://jmeter-plugins.org/wiki/ThroughputShapingTimer/)
 - jpgc-casutg=2.6 - [Concurrency Thread Group](https://jmeter-plugins.org/wiki/ConcurrencyThreadGroup/#Concurrency-Thread-Group)
 - cmdrunner-2.2 - JMeter specific [Command Line Tool](https://jmeter-plugins.org/wiki/JMeterPluginsCMD/#JMeterPluginsCMD-Command-Line-Tool)
