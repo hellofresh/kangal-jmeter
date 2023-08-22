@@ -2,8 +2,8 @@
 
 #variables 
 JMETER_METRIC_URL="http://localhost:9270/metrics"
-PUSHGATEWAY_HOST=${PUSHGATEWAY_HOST:-"https://pushgateway.omnisend.io:9091"}
-PUSHGATEWAY_JOB_NAME=${PUSHGATEWAY_JOB_NAME:-"loadtest"}
+PUSHGATEWAY_HOST=${PUSHGATEWAY_HOST:-"https://pushgateway.omnisend.io"}
+PUSHGATEWAY_JOB_NAME=${PUSHGATEWAY_JOB_NAME:-"reporting-loadtest"}
 PUSHGATEWAY_SEND_METRICS_SECONDS=${PUSHGATEWAY_SEND_METRICS_SECONDS:-"10"}
 
 run_jmeter_test() {
@@ -38,7 +38,7 @@ run_jmeter_test() {
       cp ./output.log /results/output.log
       exit 1
     fi
-	if [[ ! "$PUSHGATEWAY_HOST" -eq "false" ]]; then
+	if [[ "$PUSHGATEWAY_HOST" != "false" ]]; then
 		echo "send metrics from JMETER_METRIC_URL $JMETER_METRIC_URL to PUSHGATEWAY $PUSHGATEWAY_HOST/metrics/job/$PUSHGATEWAY_JOB_NAME/instance/$HOSTNAME"
 		curl -s $JMETER_METRIC_URL | curl --data-binary @- $PUSHGATEWAY_HOST/metrics/job/$PUSHGATEWAY_JOB_NAME/instance/$HOSTNAME
 	else
