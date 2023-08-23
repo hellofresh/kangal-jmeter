@@ -10,11 +10,14 @@ run_jmeter_test() {
 
   "$JMETER_HOME"/bin/jmeter.sh -n -t "$FILE" -l results.csv -e -o /results/ -Jserver.rmi.ssl.disable="$SSL_DISABLED" "$WORKER_OPTS" >>output.log 2>&1 &
 
+  echo $BUCKET_SECRET
+
   echo "$BUCKET_SECRET" | base64 --decode > gcp-credentials.json
 
   cat gcp-credentials.json
 
   echo "TESTING ECHO-2"
+  env
 
   echo "Checking output.log"
   while true; do
@@ -23,6 +26,7 @@ run_jmeter_test() {
     if grep "end of run" ./output.log; then
       echo "=== Jmeter is finished! ==="
       cp results.csv /results/results.csv
+      echo "$REPORT_PRESIGNED_URL"
       if [[ -n "${REPORT_PRESIGNED_URL}" ]]; then
         echo "=== Saving report to Object storage ==="
         tar -C /results -cf results.tar .
