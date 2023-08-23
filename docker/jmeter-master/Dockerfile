@@ -1,4 +1,4 @@
-FROM hellofresh/kangal-jmeter:5.5
+FROM gcr.io/omnisend-ops/kangal-jmeter-base:5.5
 
 ENV SSL_DISABLED false
 ENV WORKER_SVC_NAME jmeter-worker
