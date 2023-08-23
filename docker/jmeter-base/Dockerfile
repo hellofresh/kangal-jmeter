@@ -2,7 +2,7 @@ FROM openjdk:11-jre-slim
 LABEL maintainer="team-platform@hellofresh.com"
 
 ARG JMETER_VERSION
-ENV JMETER_VERSION 5.5
+ENV JMETER_VERSION 5.6
 ENV JMETER_HOME /opt/apache-jmeter-$JMETER_VERSION
 ENV PATH $JMETER_HOME/bin:$PATH
 ENV HEAP -Xms2g -Xmx2g -XX:MaxMetaspaceSize=256m

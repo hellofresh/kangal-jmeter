@@ -1,4 +1,4 @@
-FROM gcr.io/omnisend-ops/kangal-jmeter-base:5.5
+FROM gcr.io/omnisend-ops/kangal-jmeter-base:5.6
 
 ENV SSL_DISABLED false
 ENV WORKER_SVC_NAME jmeter-worker
@@ -10,8 +10,8 @@ RUN apt-get update && \
     apt-get --quiet --yes install awscli && \
     apt-get --quiet --yes install gsutil
 
-COPY mysql-connector-java-5.1.47-bin.jar /opt/apache-jmeter-5.5/lib/
-COPY jmeter.properties /opt/apache-jmeter-5.5/bin/
+COPY mysql-connector-java-5.1.47-bin.jar /opt/apache-jmeter-5.6/lib/
+COPY jmeter.properties /opt/apache-jmeter-5.6/bin/
 COPY launcher.sh /
 
 ENTRYPOINT ["/launcher.sh"]
