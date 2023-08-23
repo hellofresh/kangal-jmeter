@@ -1,6 +1,9 @@
 #!/bin/bash
 
+echo "TESTING ECHO-0"
+
 run_jmeter_test() {
+  echo "TESTING ECHO-1"
   FILE=$1
   [[ "$USE_WORKERS" == "true" ]] && WORKER_OPTS="-R $(getent ahostsv4 "$WORKER_SVC_NAME" | cut -d ' ' -f 1 | sort -u | paste --serial --delimiters ',')"
   echo "=== Running JMeter load generator ==="
@@ -10,6 +13,8 @@ run_jmeter_test() {
   echo "$BUCKET_SECRET" | base64 --decode > gcp-credentials.json
 
   cat gcp-credentials.json
+
+  echo "TESTING ECHO-2"
 
   echo "Checking output.log"
   while true; do
