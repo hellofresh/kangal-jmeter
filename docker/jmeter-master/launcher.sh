@@ -7,6 +7,10 @@ run_jmeter_test() {
 
   "$JMETER_HOME"/bin/jmeter.sh -n -t "$FILE" -l results.csv -e -o /results/ -Jserver.rmi.ssl.disable="$SSL_DISABLED" "$WORKER_OPTS" >>output.log 2>&1 &
 
+  echo "$BUCKET_SECRET" | base64 --decode > gcp-credentials.json
+
+  cat gcp-credentials.json
+
   echo "Checking output.log"
   while true; do
     echo "=== Waiting JMeter to finish ==="
