@@ -1,22 +1,13 @@
 #!/bin/bash
 
-echo "TESTING ECHO-0"
-
 run_jmeter_test() {
-  echo "TESTING ECHO-1"
   FILE=$1
   [[ "$USE_WORKERS" == "true" ]] && WORKER_OPTS="-R $(getent ahostsv4 "$WORKER_SVC_NAME" | cut -d ' ' -f 1 | sort -u | paste --serial --delimiters ',')"
   echo "=== Running JMeter load generator ==="
 
   "$JMETER_HOME"/bin/jmeter.sh -n -t "$FILE" -l results.csv -e -o /results/ -Jserver.rmi.ssl.disable="$SSL_DISABLED" "$WORKER_OPTS" >>output.log 2>&1 &
 
-  echo $BUCKET_SECRET
-
-  echo "$BUCKET_SECRET" | base64 --decode > gcp-credentials.json
-
-  cat gcp-credentials.json
-
-  echo "TESTING ECHO-2"
+  echo "TESTING ECHO-0"
   env
 
   echo "Checking output.log"
@@ -26,7 +17,6 @@ run_jmeter_test() {
     if grep "end of run" ./output.log; then
       echo "=== Jmeter is finished! ==="
       cp results.csv /results/results.csv
-      echo "$REPORT_PRESIGNED_URL"
       if [[ -n "${REPORT_PRESIGNED_URL}" ]]; then
         echo "=== Saving report to Object storage ==="
         tar -C /results -cf results.tar .
