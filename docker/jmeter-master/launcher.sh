@@ -10,16 +10,20 @@ run_jmeter_test() {
   echo "TESTING ECHO-0"
   env
 
+  url="$REPORT_PRESIGNED_URL"
+  TEST_NAME=$(echo "$url" | awk -F'/' '{print $(NF-1)}')
+
   echo "Checking output.log"
   while true; do
     echo "=== Waiting JMeter to finish ==="
     cat output.log
     if grep "end of run" ./output.log; then
       echo "=== Jmeter is finished! ==="
+      ls -la
       cp results.csv /results/results.csv
       if [[ -n "${REPORT_PRESIGNED_URL}" ]]; then
         echo "=== Saving report to Object storage ==="
-        tar -C /results -cf results-${WORKER_SVC_NAME}.tar .
+        tar -C /results -cf results-${TEST_NAME}.tar .
         # curl -X PUT -H "Content-Type: application/x-tar" -T results.tar -L "${REPORT_PRESIGNED_URL}"
         curl --form file='@results-${WORKER_SVC_NAME}.tar' "gcs-uploader.kangal.svc.cluster.local/upload"
       elif [[ -n "${AWS_BUCKET_NAME}" ]]; then
