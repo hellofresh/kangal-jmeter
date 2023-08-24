@@ -20,6 +20,7 @@ run_jmeter_test() {
     if grep "end of run" ./output.log; then
       echo "=== Jmeter is finished! ==="
       cp results.csv /results/results.csv
+      cp test_results.csv /results/test_results.csv
       if [[ -n "${REPORT_PRESIGNED_URL}" ]]; then
         echo "=== Saving report to Object storage ==="
         tar -C /results -cf results-${TEST_NAME}.tar .
