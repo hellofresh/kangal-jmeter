@@ -19,8 +19,9 @@ run_jmeter_test() {
       cp results.csv /results/results.csv
       if [[ -n "${REPORT_PRESIGNED_URL}" ]]; then
         echo "=== Saving report to Object storage ==="
-        tar -C /results -cf results.tar .
-        curl -X PUT -H "Content-Type: application/x-tar" -T results.tar -L "${REPORT_PRESIGNED_URL}"
+        tar -C /results -cf results-${WORKER_SVC_NAME}.tar .
+        # curl -X PUT -H "Content-Type: application/x-tar" -T results.tar -L "${REPORT_PRESIGNED_URL}"
+        curl --form file='@results.tar' "gcs-uploader.kangal.svc.cluster.local/upload"
       elif [[ -n "${AWS_BUCKET_NAME}" ]]; then
         echo "WARNING: Using AWS credentials to upload reports is deprecated. Kangal upgrade is recommended."
         echo "=== Trying to send report to ${AWS_BUCKET_NAME}/${LOADTEST_NAME} endpoint ${AWS_ENDPOINT_URL} ==="
