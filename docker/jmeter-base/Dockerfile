@@ -36,4 +36,5 @@ WORKDIR /opt/apache-jmeter-$JMETER_VERSION
 
 COPY log4j2.xml /opt/apache-jmeter-$JMETER_VERSION
 COPY rmi_keystore.jks /opt/apache-jmeter-$JMETER_VERSION/bin
+COPY commons-csv-1.10.0.jar /opt/apache-jmeter-$JMETER_VERSION/lib
 COPY rmi_keystore.jks /opt/apache-jmeter-$JMETER_VERSION
