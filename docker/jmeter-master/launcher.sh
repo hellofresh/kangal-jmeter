@@ -19,7 +19,7 @@ run_jmeter_test() {
     cat output.log
     if grep "end of run" ./output.log; then
       echo "=== Jmeter is finished! ==="
-	  sh ./results.sh
+	  sh results.sh
       cp results.csv /results/results.csv
       cp test_results.csv /results/test_results.csv
 	  cp summary_report.csv /results/summary_report.csv
