@@ -34,7 +34,7 @@ with open(input_file, 'r') as csvfile, open(output_file, 'w', newline='') as out
         response_time = int(row[0])
         request_name = row[1].strip('"')
         
-        if "sents" in request_name or "clicks" in request_name:
+        if "Sents" in request_name or "Clicks" in request_name:
             if request_name != current_request:
                 if request_count > 0:
                     average_response_time = total_response_time / request_count
