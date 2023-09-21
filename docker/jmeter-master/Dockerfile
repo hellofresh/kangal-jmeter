@@ -1,4 +1,4 @@
-FROM gcr.io/omnisend-ops/kangal-jmeter-base:5.6
+FROM gcr.io/omnisend-ops/kangal-jmeter-base:5.6.2
 
 ENV SSL_DISABLED false
 ENV WORKER_SVC_NAME jmeter-worker
@@ -15,9 +15,9 @@ RUN apt-get update && \
 #     apt-get update -y && \
 #     apt-get --quiet --yes install google-cloud-cli
 
-COPY mysql-connector-java-5.1.47-bin.jar /opt/apache-jmeter-5.6/lib/
-COPY jmeter.properties /opt/apache-jmeter-5.6/bin/
+COPY mysql-connector-java-5.1.47-bin.jar /opt/apache-jmeter-5.6.2/lib/
+COPY jmeter.properties /opt/apache-jmeter-5.6.2/bin/
 COPY launcher.sh /
-COPY results.sh /opt/apache-jmeter-5.6/
+COPY results.sh /opt/apache-jmeter-5.6.2/
 
 ENTRYPOINT ["/launcher.sh"]
