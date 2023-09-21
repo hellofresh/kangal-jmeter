@@ -34,20 +34,19 @@ with open(input_file, 'r') as csvfile, open(output_file, 'w', newline='') as out
         response_time = int(row[0])
         request_name = row[1].strip('"')
         
-        if "Setup" not in request_name:
-            if request_name != current_request:
-                if request_count > 0:
-                    average_response_time = total_response_time / request_count
-                    writer.writerow([current_request, "{:.2f}".format(average_response_time), max_response_time])
-                
-                current_request = request_name
-                total_response_time = 0
-                max_response_time = 0
-                request_count = 0
+        if request_name != current_request:
+            if request_count > 0:
+                average_response_time = total_response_time / request_count
+                writer.writerow([current_request, "{:.2f}".format(average_response_time), max_response_time])
             
-            total_response_time += response_time
-            max_response_time = max(max_response_time, response_time)
-            request_count += 1
+            current_request = request_name
+            total_response_time = 0
+            max_response_time = 0
+            request_count = 0
+        
+        total_response_time += response_time
+        max_response_time = max(max_response_time, response_time)
+        request_count += 1
     
     if request_count > 0:
         average_response_time = total_response_time / request_count
