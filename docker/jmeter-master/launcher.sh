@@ -2,15 +2,24 @@
 
 run_jmeter_test() {
   FILE=$1
-  [[ "$USE_WORKERS" == "true" ]] && WORKER_OPTS="-R $(getent ahostsv4 "$WORKER_SVC_NAME" | cut -d ' ' -f 1 | sort -u | paste --serial --delimiters ',')"
+  if [[ "$USE_WORKERS" == "true" ]]; then
+    WORKER_HOSTS=$(getent ahostsv4 "$WORKER_SVC_NAME")
+    if [[ $(echo "$WORKER_HOSTS" | cut -d ' ' -f 1 | sort -u | wc -l) == $WORKERS_TOTAL ]]; then
+      echo "=== Waiting for workers ==="
+      while [[ "$WORKER_HOSTS" == "" ]]; do
+        sleep 10
+        WORKER_HOSTS=$(getent ahostsv4 "$WORKER_SVC_NAME")
+      done
+    fi
+    WORKER_OPTS="-R $(echo "$WORKER_HOSTS" | cut -d ' ' -f 1 | sort -u | paste --serial --delimiters ',')"
+  fi
   echo "=== Running JMeter load generator ==="
 
-  "$JMETER_HOME"/bin/jmeter.sh -n -t "$FILE" -l results.csv -e -o /results/ -Jserver.rmi.ssl.disable="$SSL_DISABLED" "$WORKER_OPTS" >>output.log 2>&1 &
+  "$JMETER_HOME"/bin/jmeter.sh -n -t "$FILE" -l results.csv -e -o /results/ -Jserver.rmi.ssl.disable="$SSL_DISABLED" "$WORKER_OPTS" 2>&1 | tee -a output.log &
 
   echo "Checking output.log"
   while true; do
     echo "=== Waiting JMeter to finish ==="
-    cat output.log
     if grep "end of run" ./output.log; then
       echo "=== Jmeter is finished! ==="
       cp results.csv /results/results.csv
