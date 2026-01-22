@@ -1,5 +1,5 @@
 # Kangal-JMeter
-<p align="center">  
+<p align="center">
 <img src="./kangal_logo.svg" height="100">
 <img src="./hellofresh.svg" height="100">
 </p>
@@ -7,6 +7,12 @@
 Kangal-JMeter is a set of docker images specifically configured for [Kangal](https://github.com/hellofresh/kangal)
 
 Based on these images Kangal creates JMeter-worker and JMeter-master pods automatically for every new load-test.
+
+> [!WARNING]
+> Kangal's upload to DockerHub has been removed
+> We apologize for the disruption, but you can get the image from `ghcr.io/hellofresh/kangal-jmeter/*` from January 31st onwards.
+>
+> The registry in DockerHub will not be available from February-onwards
 
 ## Kangal-JMeter specific features
 
