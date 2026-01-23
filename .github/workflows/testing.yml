@@ -89,7 +89,7 @@ jobs:
           push: false
 
       - name: Build Docker master image
-        uses: docker/build-push-action@v3=6
+        uses: docker/build-push-action@v6
         with:
           tags: hellofresh/kangal-jmeter-master:local
           context: docker/jmeter-master
