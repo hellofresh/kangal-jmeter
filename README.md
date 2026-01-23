@@ -10,9 +10,10 @@ Based on these images Kangal creates JMeter-worker and JMeter-master pods automa
 
 > [!WARNING]
 > Kangal's upload to DockerHub has been removed
-> We apologize for the disruption, but you can get the image from `ghcr.io/hellofresh/kangal-jmeter/*` from January 31st onwards.
+> We apologize for the disruption, but you can get the image from
+> `ghcr.io/hellofresh/kangal-jmeter`, `ghcr.io/hellofresh/kangal-jmeter/master`, and `ghcr.io/hellofresh/kangal-jmeter/worker` from January 31st 2026 onwards.
 >
-> The registry in DockerHub will not be available from February-onwards
+> The registry in DockerHub will not be available from February 2026 onwards
 
 ## Kangal-JMeter specific features
 
