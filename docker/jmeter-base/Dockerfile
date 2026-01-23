@@ -1,4 +1,5 @@
-FROM openjdk:11-jre-slim
+FROM openjdk:11.0.11-jre-slim
+# TODO: openjdk images are deprecated, find a suitable replacement.
 LABEL maintainer="team-platform@hellofresh.com"
 
 ARG JMETER_VERSION
