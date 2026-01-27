@@ -10,7 +10,7 @@ env:
   REGISTRY: ghcr.io
 
 on:
-  pull_request:
+  workflow_dispatch:
 
 jobs:
   build_docker:
