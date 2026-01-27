@@ -1,0 +1,40 @@
+name: Copy images from dockerhub
+
+concurrency: release
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  REGISTRY: ghcr.io
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build_docker:
+    name: Build docker image release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+      - name: Install regctl
+        uses: regclient/actions/regctl-installer@v0.1.0
+      - name: regctl login
+        uses: regclient/actions/regctl-login@v0.1.0
+        with:
+            registry: ${{env.REGISTRY}}
+            username: ${{github.actor}}
+            password: ${{secrets.GITHUB_TOKEN}}
+      - name: Copy worker
+        run: |
+            regctl repo copy docker.io/hellofresh/kangal-jmeter-worker ghcr.io/hellofresh/kangal-jmeter/worker
+      - name: Copy master
+        run: |
+            regctl repo copy docker.io/hellofresh/kangal-jmeter-master ghcr.io/hellofresh/kangal-jmeter/master
+      - name: Copy kangal
+        run: |
+            regctl repo copy docker.io/hellofresh/kangal-jmeter ghcr.io/hellofresh/kangal-jmeter
