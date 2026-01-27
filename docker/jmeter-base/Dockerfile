@@ -1,4 +1,3 @@
-# FROM openjdk:11.0.11-jre-slim
 FROM eclipse-temurin:11-jre
 LABEL maintainer="team-platform@hellofresh.com"
 
