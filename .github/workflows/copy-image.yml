@@ -20,10 +20,10 @@ jobs:
       - name: Copy kangal
         run: |
           docker container run -i --rm -v regctl-conf:/home/appuser/.regctl ghcr.io/regclient/regctl:latest \
-            regctl registry login ghcr.io -u ${{github.actor}} -p ${{ secrets.GITHUB_TOKEN }}
+            registry login ghcr.io -u ${{github.actor}} -p ${{ secrets.GITHUB_TOKEN }}
           docker container run -i --rm -v regctl-conf:/home/appuser/.regctl ghcr.io/regclient/regctl:latest \
-            regctl repo copy docker.io/hellofresh/kangal-jmeter-worker ghcr.io/hellofresh/kangal-jmeter/worker
+            repo copy docker.io/hellofresh/kangal-jmeter-worker ghcr.io/hellofresh/kangal-jmeter/worker
           docker container run -i --rm -v regctl-conf:/home/appuser/.regctl ghcr.io/regclient/regctl:latest \
-            regctl repo copy docker.io/hellofresh/kangal-jmeter-master ghcr.io/hellofresh/kangal-jmeter/master
+            repo copy docker.io/hellofresh/kangal-jmeter-master ghcr.io/hellofresh/kangal-jmeter/master
           docker container run -i --rm -v regctl-conf:/home/appuser/.regctl ghcr.io/regclient/regctl:latest \
-            regctl repo copy docker.io/hellofresh/kangal-jmeter ghcr.io/hellofresh/kangal-jmeter
+            repo copy docker.io/hellofresh/kangal-jmeter ghcr.io/hellofresh/kangal-jmeter
