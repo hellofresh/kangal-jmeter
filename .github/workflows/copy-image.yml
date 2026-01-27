@@ -21,6 +21,7 @@ jobs:
         run: |
           docker container run -i --rm -v regctl-conf:/home/appuser/.regctl ghcr.io/regclient/regctl:latest \
             registry login ghcr.io -u ${{github.actor}} -p ${{ secrets.GITHUB_TOKEN }}
+          ls regctl-conf
           docker container run -i --rm -v regctl-conf:/home/appuser/.regctl ghcr.io/regclient/regctl:latest \
             repo copy docker.io/hellofresh/kangal-jmeter-worker ghcr.io/hellofresh/kangal-jmeter/worker
           docker container run -i --rm -v regctl-conf:/home/appuser/.regctl ghcr.io/regclient/regctl:latest \
