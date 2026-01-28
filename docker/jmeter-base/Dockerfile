@@ -2,9 +2,9 @@ FROM eclipse-temurin:11-jre
 LABEL maintainer="team-platform@hellofresh.com"
 
 ARG JMETER_VERSION
-ENV JMETER_HOME /opt/apache-jmeter-$JMETER_VERSION
-ENV PATH $JMETER_HOME/bin:$PATH
-ENV HEAP -Xms2g -Xmx2g -XX:MaxMetaspaceSize=256m
+ENV JMETER_HOME=/opt/apache-jmeter-$JMETER_VERSION
+ENV PATH=$JMETER_HOME/bin:$PATH
+ENV HEAP="-Xms2g -Xmx2g -XX:MaxMetaspaceSize=256m"
 
 RUN apt-get clean \
    && apt-get update \
@@ -16,18 +16,23 @@ RUN curl -o /opt/apache-jmeter-$JMETER_VERSION.tgz \
    https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-$JMETER_VERSION.tgz -L \
    && tar -xzf /opt/apache-jmeter-$JMETER_VERSION.tgz --directory /opt \
    && rm /opt/apache-jmeter-$JMETER_VERSION.tgz \
+   && echo "Downloading plugin manager" \
    && curl -o /opt/apache-jmeter-$JMETER_VERSION/lib/ext/plugins-manager.jar -L \
    https://jmeter-plugins.org/get/ \
+   && echo "Downloading cmdrunner" \
    && curl -o /opt/apache-jmeter-$JMETER_VERSION/lib/cmdrunner-2.3.jar -L \
    https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.3/cmdrunner-2.3.jar \
+   && echo "Downloading postgresql" \
    && curl -o /opt/apache-jmeter-$JMETER_VERSION/lib/postgresql-42.5.1.jar -L \
    https://jdbc.postgresql.org/download/postgresql-42.5.1.jar \
    && rm /opt/apache-jmeter-$JMETER_VERSION/lib/mongo-java-driver-*.jar \
+   && echo "Downloading mongo-java-driver" \
    && curl -o /opt/apache-jmeter-$JMETER_VERSION/lib/mongo-java-driver-3.12.11.jar -L \
    https://search.maven.org/remotecontent?filepath=org/mongodb/mongo-java-driver/3.12.11/mongo-java-driver-3.12.11.jar \
    && java -cp /opt/apache-jmeter-$JMETER_VERSION/lib/ext/plugins-manager.jar \
    org.jmeterplugins.repository.PluginManagerCMDInstaller \
-   && PluginsManagerCMD.sh install jpgc-fifo,jpgc-functions,jpgc-tst=2.5,jpgc-casutg=2.6
+   && echo "Install plugins" \
+   && PluginsManagerCMD.sh install jpgc-fifo,jpgc-functions,jpgc-tst=2.5,jpgc-casutg=2.9
 
 WORKDIR /opt/apache-jmeter-$JMETER_VERSION
 
